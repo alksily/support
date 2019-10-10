@@ -1,6 +1,6 @@
 <?php
 
-namespace AEngine\Support\Traits;
+namespace Alksily\Support\Traits;
 
 use BadMethodCallException;
 use Closure;

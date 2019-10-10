@@ -1,8 +1,8 @@
 <?php
 
-namespace AEngine\Support;
+namespace Alksily\Support;
 
-use AEngine\Support\Traits\Macroable;
+use Alksily\Support\Traits\Macroable;
 
 /**
  * @method static string text(string $name, array $options = [])
