@@ -61,7 +61,7 @@ class Str
      *
      * @return bool
      */
-    public static function start($needles, $haystack)
+    public static function start($haystack, $needles)
     {
         foreach ((array)$needles as $needle) {
             if ($needle !== '' && substr($haystack, 0, strlen($needle)) === (string)$needle) {
@@ -76,12 +76,12 @@ class Str
     /**
      * Return true if the string ends with the specified character
      *
-     * @param string|array $needles
      * @param string       $haystack
+     * @param string|array $needles
      *
      * @return bool
      */
-    public static function end($needles, $haystack)
+    public static function end($haystack, $needles)
     {
         foreach ((array)$needles as $needle) {
             if (substr($haystack, -strlen($needle)) === (string)$needle) {
