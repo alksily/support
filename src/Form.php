@@ -153,7 +153,7 @@ class Form
                     $form .= '<option';
                     $form .= ' value="' . $key . '"';
 
-                    if ($data['selected'] && $data['selected'] == $key) {
+                    if ($data['selected'] && $data['selected'] == $key || is_array($data['selected']) && in_array($key, $data['selected'])) {
                         $form .= ' selected';
                     }
 
