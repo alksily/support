@@ -16,7 +16,7 @@ class Str
      *
      * @return string
      */
-    public static function after($subject, $search)
+    public static function after(string $subject, string $search): string
     {
         return $search === '' ? $subject : array_reverse(explode($search, $subject, 2))[0];
     }
@@ -29,7 +29,7 @@ class Str
      *
      * @return string
      */
-    public static function before($subject, $search)
+    public static function before(string $subject, string $search): string
     {
         return $search === '' ? $subject : explode($search, $subject)[0];
     }
@@ -42,9 +42,9 @@ class Str
      *
      * @return bool
      */
-    public static function contains($haystack, $needles)
+    public static function contains(string $haystack, string|array $needles): bool
     {
-        foreach ((array)$needles as $needle) {
+        foreach ((array) $needles as $needle) {
             if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {
                 return true;
             }
@@ -56,15 +56,15 @@ class Str
     /**
      * Return true if the string starts with the specified character
      *
-     * @param string|array $needles
-     * @param string       $haystack
+     * @param string|array $haystack
+     * @param string       $needles
      *
      * @return bool
      */
-    public static function start($haystack, $needles)
+    public static function start(string|array $haystack, string $needles): bool
     {
-        foreach ((array)$needles as $needle) {
-            if ($needle !== '' && substr($haystack, 0, strlen($needle)) === (string)$needle) {
+        foreach ((array) $needles as $needle) {
+            if ($needle !== '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
                 return true;
             }
         }
@@ -81,10 +81,10 @@ class Str
      *
      * @return bool
      */
-    public static function end($haystack, $needles)
+    public static function end(string $haystack, string|array $needles): bool
     {
-        foreach ((array)$needles as $needle) {
-            if (substr($haystack, -strlen($needle)) === (string)$needle) {
+        foreach ((array) $needles as $needle) {
+            if (substr($haystack, -strlen($needle)) === (string) $needle) {
                 return true;
             }
         }
@@ -101,7 +101,7 @@ class Str
      *
      * @return string
      */
-    public static function truncate($value, $limit, $end = '...')
+    public static function truncate(string $value, int $limit, string $end = '...'): string
     {
         if (mb_strwidth($value, 'UTF-8') <= $limit) {
             return $value;
@@ -120,9 +120,9 @@ class Str
      *
      * @return string
      */
-    public static function eos($count, $one, $two, $five)
+    public static function eos(int $count, string $one, string $two, string $five): string
     {
-        if (substr($count, -1, 1) == '1' && substr($count, -2, 2) != '11') {
+        if (str_ends_with($count, '1') && !str_ends_with($count, '11')) {
             return $one;
         } else {
             if (substr($count, -2, 1) != 1 && substr($count, -1, 1) > 1 && substr($count, -1, 1) < 5) {
@@ -140,7 +140,7 @@ class Str
      *
      * @return string
      */
-    public static function lower($value)
+    public static function lower(string $value): string
     {
         return mb_strtolower($value, 'UTF-8');
     }
@@ -152,7 +152,7 @@ class Str
      *
      * @return string
      */
-    public static function upper($value)
+    public static function upper(string $value): string
     {
         return mb_strtoupper($value, 'UTF-8');
     }
@@ -164,7 +164,7 @@ class Str
      *
      * @return string
      */
-    public static function title($value)
+    public static function title(string $value): string
     {
         return mb_convert_case($value, MB_CASE_TITLE, 'UTF-8');
     }
@@ -176,7 +176,7 @@ class Str
      *
      * @return string
      */
-    public static function int2roman($int)
+    public static function int2roman(int $int): string
     {
         $romanNumerals = [
             'M' => 1000,
@@ -206,11 +206,11 @@ class Str
     /**
      * Escape a string or an array of strings
      *
-     * @param string|array $input
+     * @param array|string $input
      *
-     * @return string;
+     * @return array|string;
      */
-    public static function escape($input)
+    public static function escape(array|string $input): array|string
     {
         if (is_array($input)) {
             foreach ($input as $key => $value) {
@@ -226,11 +226,11 @@ class Str
     /**
      * Remove the screening in a row or an array of strings
      *
-     * @param string|array $input
+     * @param array|string $input
      *
-     * @return string;
+     * @return array|string;
      */
-    public static function unEscape($input)
+    public static function unEscape(array|string $input): array|string
     {
         if (is_array($input)) {
             foreach ($input as $key => $value) {
@@ -249,9 +249,9 @@ class Str
      * @param string $input
      * @param bool   $back
      *
-     * @return mixed
+     * @return string|array
      */
-    public static function translate($input, $back = false)
+    public static function translate(string $input, bool $back = false): string|array
     {
         $russian = [
             'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У',
@@ -276,10 +276,10 @@ class Str
      *
      * @return string
      */
-    public static function convertSize($size)
+    public static function convertSize(int $size): string
     {
         $unit = ['b', 'kb', 'mb', 'gb', 'tb', 'pb'];
 
-        return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[(int)$i];
+        return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[(int) $i];
     }
 }

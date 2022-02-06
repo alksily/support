@@ -37,21 +37,21 @@ class Form
      *
      * @var array
      */
-    public static $globalError = [];
+    public static array $globalError = [];
 
     /**
      * Class name for input when error
      *
      * @var string
      */
-    public static $errorClassName = 'error';
+    public static string $errorClassName = 'error';
 
     /**
      * Array of supported types
      *
      * @var array
      */
-    protected static $type = [
+    protected static array $type = [
         'text', 'search', 'url', 'email', 'tel', 'password',
         'number', 'range',
         'time', 'date', 'datetime', 'week', 'month',
@@ -63,22 +63,22 @@ class Form
     ];
 
     /**
-     * @param string $type
-     * @param array  $args
+     * @param string $method
+     * @param array  $parameters
      *
      * @return string|null
      */
-    public static function __callStatic($type, $args)
+    public static function __callStatic(string $method, array $parameters): ?string
     {
-        if (in_array($type, static::$type)) {
-            if (count($args) == 2) {
-                list($name, $data) = $args;
+        if (in_array($method, static::$type)) {
+            if (count($parameters) == 2) {
+                [$name, $data] = $parameters;
             } else {
-                $name = reset($args);
+                $name = reset($parameters);
                 $data = [];
             }
 
-            return static::render(array_merge($data, ['name' => $name, 'type' => $type]));
+            return static::render(array_merge($data, ['name' => $name, 'type' => $method]));
         }
 
         return null;
@@ -91,7 +91,7 @@ class Form
      *
      * @return string
      */
-    public static function select($name, array $option = [], array $data = [])
+    public static function select(string $name, array $option = [], array $data = []): string
     {
         return static::render(array_merge($data, ['name' => $name, 'type' => 'select', 'option' => $option]));
     }
@@ -101,7 +101,7 @@ class Form
      *
      * @return string
      */
-    protected static function render(array $data = [])
+    protected static function render(array $data = []): string
     {
         $default = [
             'method' => 'post',
@@ -136,7 +136,7 @@ class Form
                 $data = array_merge($default, $attr, $data);
 
                 $form .= '<textarea ' . static::getAttr($data, ['value', 'type']) . '>';
-                $form .= isset($data['value']) ? $data['value'] : '';
+                $form .= $data['value'] ?? '';
                 $form .= '</textarea>';
 
                 break;
@@ -232,21 +232,16 @@ class Form
      *
      * @return string
      */
-    protected static function getAttr(array &$data = [], array $exclude = [])
+    protected static function getAttr(array &$data = [], array $exclude = []): string
     {
         $attr = [];
 
         // substituted values
-        switch (strtolower($data['method'])) {
-            case 'get':
-                $value = static::getValue($_GET, $data['name']);
-                break;
-            case 'post':
-                $value = static::getValue($_POST, $data['name']);
-                break;
-            default:
-                $value = null;
-        }
+        $value = match (strtolower($data['method'] ?? '')) {
+            'get' => static::getValue($_GET, $data['name']),
+            'post' => static::getValue($_POST, $data['name']),
+            default => null,
+        };
 
         if ($value) {
             switch ($data['type']) {
@@ -288,7 +283,7 @@ class Form
 
             if (is_bool($value) && $value) {
                 $attr[] = $key;
-            } else if (!is_bool($value) && !is_null($value)) {
+            } elseif (!is_bool($value) && !is_null($value)) {
                 $attr[] = $key . '="' . $value . '"';
             }
         }
@@ -302,9 +297,9 @@ class Form
      * @param array  $array
      * @param string $field
      *
-     * @return array|mixed
+     * @return mixed
      */
-    protected static function getValue(array $array, string $field)
+    protected static function getValue(array $array, string $field): mixed
     {
         foreach (explode('[', str_replace(']', '', $field)) as $segment) {
             if (array_key_exists($segment, $array)) {

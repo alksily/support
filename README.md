@@ -3,7 +3,7 @@ Support
 Classes: Crypta, Form and Str
 
 #### Requirements
-* PHP >= 7.0
+* PHP >= 8.1
 
 #### Installation
 Run the following command in the root directory of your web project:

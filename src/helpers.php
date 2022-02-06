@@ -29,7 +29,7 @@ if (!function_exists('str_after')) {
      *
      * @return string
      */
-    function str_after($subject, $search)
+    function str_after(string $subject, string $search): string
     {
         return Str::after($subject, $search);
     }
@@ -44,7 +44,7 @@ if (!function_exists('str_before')) {
      *
      * @return string
      */
-    function str_before($subject, $search)
+    function str_before(string $subject, string $search): string
     {
         return Str::before($subject, $search);
     }
@@ -55,11 +55,11 @@ if (!function_exists('str_contains')) {
      * Determine if a given string contains a given substring.
      *
      * @param string       $haystack
-     * @param string|array $needles
+     * @param array|string $needles
      *
      * @return bool
      */
-    function str_contains($haystack, $needles)
+    function str_contains(string $haystack, array|string $needles): bool
     {
         return Str::contains($haystack, $needles);
     }
@@ -70,11 +70,11 @@ if (!function_exists('str_starts_with')) {
      * Determine if a given string starts with a given substring.
      *
      * @param string       $haystack
-     * @param string|array $needles
+     * @param array|string $needles
      *
      * @return bool
      */
-    function str_starts_with($haystack, $needles)
+    function str_starts_with(string $haystack, array|string $needles): bool
     {
         return Str::start($haystack, $needles);
     }
@@ -85,11 +85,11 @@ if (!function_exists('str_ends_with')) {
      * Determine if a given string ends with a given substring.
      *
      * @param string       $haystack
-     * @param string|array $needles
+     * @param array|string $needles
      *
      * @return bool
      */
-    function str_ends_with($haystack, $needles)
+    function str_ends_with(string $haystack, array|string $needles): bool
     {
         return Str::end($haystack, $needles);
     }
@@ -105,7 +105,7 @@ if (!function_exists('str_truncate')) {
      *
      * @return string
      */
-    function str_truncate($value, $limit = 100, $end = '...')
+    function str_truncate(string $value, int $limit = 100, string $end = '...'): string
     {
         return Str::truncate($value, $limit, $end);
     }
@@ -122,7 +122,7 @@ if (!function_exists('str_eos')) {
      *
      * @return string
      */
-    function str_eos($count, $one, $two, $five)
+    function str_eos(int $count, string $one, string $two, string $five): string
     {
         return Str::eos($count, $one, $two, $five);
     }
@@ -136,7 +136,7 @@ if (!function_exists('str_title_case')) {
      *
      * @return string
      */
-    function str_title_case($value)
+    function str_title_case(string $value): string
     {
         return Str::title($value);
     }
@@ -146,11 +146,11 @@ if (!function_exists('str_escape')) {
     /**
      * Escape a string or an array of strings
      *
-     * @param string|array $input
+     * @param array|string $input
      *
      * @return string;
      */
-    function str_escape($input)
+    function str_escape(array|string $input): string
     {
         return Str::escape($input);
     }
@@ -160,11 +160,11 @@ if (!function_exists('str_un_escape')) {
     /**
      * Remove the screening in a row or an array of strings
      *
-     * @param string|array $input
+     * @param array|string $input
      *
      * @return string;
      */
-    function str_un_escape($input)
+    function str_un_escape(array|string $input): string
     {
         return Str::unEscape($input);
     }
@@ -178,7 +178,7 @@ if (!function_exists('str_convert_size')) {
      *
      * @return string
      */
-    function str_convert_size($size)
+    function str_convert_size(int $size): string
     {
         return Str::convertSize($size);
     }
@@ -194,7 +194,7 @@ if (!function_exists('form')) {
      *
      * @return string
      */
-    function form($type, $name, $args = [])
+    function form(string $type, string $name, array $args = []): string
     {
         return Form::__callStatic($type, [$name, $args]);
     }
@@ -209,7 +209,7 @@ if (!function_exists('crypta_encrypt')) {
      *
      * @return string
      */
-    function crypta_encrypt($input, $secret = '')
+    function crypta_encrypt(string $input, string $secret = ''): string
     {
         return Crypta::encrypt($input, $secret);
     }
@@ -224,7 +224,7 @@ if (!function_exists('crypta_decrypt')) {
      *
      * @return string
      */
-    function crypta_decrypt($input, $secret = '')
+    function crypta_decrypt(string $input, string $secret = ''): string
     {
         return Crypta::decrypt($input, $secret);
     }
@@ -239,7 +239,7 @@ if (!function_exists('crypta_hash')) {
      *
      * @return string
      */
-    function crypta_hash($string, $secret = '')
+    function crypta_hash(string $string, string $secret = ''): string
     {
         return Crypta::hash($string, $secret);
     }
@@ -254,7 +254,7 @@ if (!function_exists('crypta_hash_check')) {
      *
      * @return bool
      */
-    function crypta_hash_check($string, $hashString)
+    function crypta_hash_check(string $string, string $hashString): bool
     {
         return Crypta::check($string, $hashString);
     }

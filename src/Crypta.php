@@ -16,7 +16,7 @@ class Crypta
      *
      * @return string
      */
-    public static function encrypt($input, $secret = '')
+    public static function encrypt(string $input, string $secret = ''): string
     {
         return base64_encode(static::crypt($input, $secret));
     }
@@ -29,7 +29,7 @@ class Crypta
      *
      * @return string
      */
-    public static function decrypt($input, $secret = '')
+    public static function decrypt(string $input, string $secret = ''): string
     {
         return static::crypt(base64_decode($input), $secret);
     }
@@ -42,7 +42,7 @@ class Crypta
      *
      * @return string
      */
-    protected static function crypt($input, $secret)
+    protected static function crypt(string $input, string $secret): string
     {
         $salt = md5($secret);
         $len = mb_strlen($input);
@@ -63,11 +63,11 @@ class Crypta
      *
      * @return string
      */
-    public static function hash($string, $secret = '')
+    public static function hash(string $string, string $secret = ''): string
     {
         $salt = substr(hash('whirlpool', uniqid(mt_rand() . $secret, true)), 0, 12);
         $hash = hash('whirlpool', $salt . $string);
-        $saltPos = (mb_strlen($string) >= mb_strlen($hash) ? mb_strlen($hash) : mb_strlen($string));
+        $saltPos = min(mb_strlen($string), mb_strlen($hash));
 
         return substr($hash, 0, $saltPos) . $salt . substr($hash, $saltPos);
     }
@@ -80,9 +80,9 @@ class Crypta
      *
      * @return bool
      */
-    public static function check($string, $hashString)
+    public static function check(string $string, string $hashString): bool
     {
-        $saltPos = (mb_strlen($string) >= mb_strlen($hashString) ? mb_strlen($hashString) : mb_strlen($string));
+        $saltPos = min(mb_strlen($string), mb_strlen($hashString));
         $salt = substr($hashString, $saltPos, 12);
         $hash = hash('whirlpool', $salt . $string);
 
