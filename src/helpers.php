@@ -148,9 +148,9 @@ if (!function_exists('str_escape')) {
      *
      * @param array|string $input
      *
-     * @return string;
+     * @return array|string;
      */
-    function str_escape(array|string $input): string
+    function str_escape(array|string $input): array|string
     {
         return Str::escape($input);
     }
@@ -162,9 +162,9 @@ if (!function_exists('str_un_escape')) {
      *
      * @param array|string $input
      *
-     * @return string;
+     * @return array|string;
      */
-    function str_un_escape(array|string $input): string
+    function str_un_escape(array|string $input): array|string
     {
         return Str::unEscape($input);
     }
