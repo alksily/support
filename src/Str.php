@@ -9,90 +9,6 @@ class Str
     use Macroable;
 
     /**
-     * Return the remainder of a string after a given value.
-     *
-     * @param string $subject
-     * @param string $search
-     *
-     * @return string
-     */
-    public static function after(string $subject, string $search): string
-    {
-        return $search === '' ? $subject : array_reverse(explode($search, $subject, 2))[0];
-    }
-
-    /**
-     * Get the portion of a string before a given value.
-     *
-     * @param string $subject
-     * @param string $search
-     *
-     * @return string
-     */
-    public static function before(string $subject, string $search): string
-    {
-        return $search === '' ? $subject : explode($search, $subject)[0];
-    }
-
-    /**
-     * Determine if a given string contains a given substring.
-     *
-     * @param string       $haystack
-     * @param string|array $needles
-     *
-     * @return bool
-     */
-    public static function contains(string $haystack, string|array $needles): bool
-    {
-        foreach ((array) $needles as $needle) {
-            if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Return true if the string starts with the specified character
-     *
-     * @param string|array $haystack
-     * @param string       $needles
-     *
-     * @return bool
-     */
-    public static function start(string|array $haystack, string $needles): bool
-    {
-        foreach ((array) $needles as $needle) {
-            if ($needle !== '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Return true if the string ends with the specified character
-     *
-     * @param string       $haystack
-     * @param string|array $needles
-     *
-     * @return bool
-     */
-    public static function end(string $haystack, string|array $needles): bool
-    {
-        foreach ((array) $needles as $needle) {
-            if (substr($haystack, -strlen($needle)) === (string) $needle) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * It is safe to truncate to the specified value, without losing the last word
      *
      * @param string $value
@@ -134,42 +50,6 @@ class Str
     }
 
     /**
-     * Convert the given string to lower-case.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function lower(string $value): string
-    {
-        return mb_strtolower($value, 'UTF-8');
-    }
-
-    /**
-     * Convert the given string to upper-case.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function upper(string $value): string
-    {
-        return mb_strtoupper($value, 'UTF-8');
-    }
-
-    /**
-     * Convert the given string to title case.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function title(string $value): string
-    {
-        return mb_convert_case($value, MB_CASE_TITLE, 'UTF-8');
-    }
-
-    /**
      * Convert Arabic number to Roman
      *
      * @param integer $int
@@ -201,72 +81,6 @@ class Str
         }
 
         return $result;
-    }
-
-    /**
-     * Escape a string or an array of strings
-     *
-     * @param array|string $input
-     *
-     * @return array|string;
-     */
-    public static function escape(array|string $input): array|string
-    {
-        if (is_array($input)) {
-            foreach ($input as $key => $value) {
-                $input[$key] = static::escape($value);
-            }
-        } else {
-            $input = htmlspecialchars($input, ENT_QUOTES);
-        }
-
-        return $input;
-    }
-
-    /**
-     * Remove the screening in a row or an array of strings
-     *
-     * @param array|string $input
-     *
-     * @return array|string;
-     */
-    public static function unEscape(array|string $input): array|string
-    {
-        if (is_array($input)) {
-            foreach ($input as $key => $value) {
-                $input[$key] = static::unEscape($value);
-            }
-        } else {
-            $input = htmlspecialchars_decode($input, ENT_QUOTES);
-        }
-
-        return $input;
-    }
-
-    /**
-     * Transliterate a russian string
-     *
-     * @param string $input
-     * @param bool   $back
-     *
-     * @return string|array
-     */
-    public static function translate(string $input, bool $back = false): string|array
-    {
-        $russian = [
-            'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У',
-            'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
-            'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь',
-            'э', 'ю', 'я',
-        ];
-        $latin = [
-            'A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U',
-            'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh',
-            'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y',
-            'y', 'y', 'e', 'yu', 'ya',
-        ];
-
-        return !$back ? str_replace($russian, $latin, $input) : str_replace($latin, $russian, $input);
     }
 
     /**

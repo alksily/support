@@ -1,11 +1,10 @@
 {
     "name": "alksily/support",
-    "description": "PHP7 Support functions",
+    "description": "PHP8 Support functions",
     "keywords": [
         "php",
         "Support",
         "String",
-        "Crypta",
         "Form"
     ],
     "homepage": "https://github.com/alksily/support",
@@ -13,7 +12,7 @@
     "authors": [
         {
             "name": "Aleksey Ilyin",
-            "email": "alksily@icloud.com",
+            "email": "alksily@outlook.com",
             "homepage": "https://www.facebook.com/aleksey.ily",
             "role": "Developer"
         }
